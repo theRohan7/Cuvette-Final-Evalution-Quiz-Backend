@@ -1,1 +1,1 @@
-export const DB_NAME = 'Cuvette-QuizBuilder'
+export const  DB_NAME = 'Cuvettequiz'
