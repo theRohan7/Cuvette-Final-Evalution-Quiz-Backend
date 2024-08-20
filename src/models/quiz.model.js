@@ -21,7 +21,8 @@ const quizSchema = new Schema(
         },
         owner:{
             type: mongoose.Schema.Types.ObjectId,
-            ref: "User"
+            ref: "User",
+            required: true
         }
     }
 )

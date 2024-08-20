@@ -16,7 +16,11 @@ const  questionSchema = new Schema(
             default: "Text",
             required: true,
         },
-        time:{
+        option: [{
+            text: {type: String, required: true},
+            isCorrect: {type: Boolean, required: true}
+        }],
+        timer:{
             type: Number,
             eum: [0, 5, 10],
             required: true,
@@ -26,38 +30,5 @@ const  questionSchema = new Schema(
     },{timestamps: true}
 )
 
-const optionSchema = new Schema(
-    {
-        questionID:{
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "Quiz"
-        },
-        optionText:{
-            type: String,
-            required: true
-        },
-        is_correct:{
-            type: Boolean,
-            required: true
-        }
-       
-    },{timestamps: true}
-)
 
 export const Question = mongoose.model("Question", questionSchema );
-export const Option = mongoose.model("Option", optionSchema );
-
-
-/*  
-
-
-Option
-- id: UUID (primary key)
-- question_id: UUID (foreign key to Question)
-- text: Text
-- is_correct: Boolean
-- order: Integer
-- created_at: Timestamp
-- updated_at: Timestamp
- 
-*/

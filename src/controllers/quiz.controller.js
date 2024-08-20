@@ -78,9 +78,14 @@ const getQuiz = asyncHandler( async(req, res) => {
         throw new ApiError(404, "Quiz not found.")
     }
 
+    quiz.impression += 1;
+    await quiz.save();
+
+    const questions = await Question.find({quizId: quiz._id})
+
     return res
     .status(200)
-    .json(new ApiResponse(200, quiz, "Quiz fetched successfully."))
+    .json(new ApiResponse(200, {quiz, questions}, "Quiz fetched successfully."))
 })
 
 const deleteQuiz = asyncHandler( async(req, res) =>{
@@ -105,11 +110,24 @@ const deleteQuiz = asyncHandler( async(req, res) =>{
     .json( new ApiResponse(200, {}, "Deleted Successfully."))
 })
 
+const shareQuiz = asyncHandler( async(req,res) =>{
+    const {id} = req.params;
+    
+    const quiz = await Quiz.findById(id)
+    if(!quiz){
+        throw new ApiError(404,"Quiz not found")
+    }
+    return res
+    .status(200)
+    .json(new ApiResponse(200, {sharelink: `/quiz/${quiz._id}`}, "Quiz Shared Successfully."))
+})
+
 export { 
     createQuiz,
     editQuiz,
     getAllQuiz,
     getQuiz,
     deleteQuiz,
+    shareQuiz
     
 }
