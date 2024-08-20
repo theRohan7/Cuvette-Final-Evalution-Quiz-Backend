@@ -9,7 +9,7 @@ const quizSchema = new Schema(
         quizType:{
             type: String,
             default: "Q&A",
-            enum: ["Q&A", "Poll Type"]
+            enum: ["Q&A", "Poll"]
         },
         date:{
             type: Date,

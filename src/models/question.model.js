@@ -6,7 +6,7 @@ const  questionSchema = new Schema(
             type: mongoose.Schema.Types.ObjectId,
             ref: "Quiz"
         },
-        question:{
+        questionText:{
             type: String,
             required: true
         },
@@ -23,7 +23,7 @@ const  questionSchema = new Schema(
             default: 0
         }
 
-    }
+    },{timestamps: true}
 )
 
 const optionSchema = new Schema(
@@ -32,16 +32,32 @@ const optionSchema = new Schema(
             type: mongoose.Schema.Types.ObjectId,
             ref: "Quiz"
         },
-        options:{
-            type: Array,
-            required: true
-        },
-        correctOption:{
+        optionText:{
             type: String,
             required: true
+        },
+        is_correct:{
+            type: Boolean,
+            required: true
         }
-    }
+       
+    },{timestamps: true}
 )
 
 export const Question = mongoose.model("Question", questionSchema );
 export const Option = mongoose.model("Option", optionSchema );
+
+
+/*  
+
+
+Option
+- id: UUID (primary key)
+- question_id: UUID (foreign key to Question)
+- text: Text
+- is_correct: Boolean
+- order: Integer
+- created_at: Timestamp
+- updated_at: Timestamp
+ 
+*/
