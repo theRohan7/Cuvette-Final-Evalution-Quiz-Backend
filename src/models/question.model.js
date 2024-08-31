@@ -17,8 +17,18 @@ const  questionSchema = new Schema(
             required: true,
         },
         options: [{
-            text: {type: String, required: true},
-            isCorrect: {type: Boolean, required: true}
+            text: { 
+                type: String, 
+                required: function() { return this.optionType !== "Image"; } 
+            },
+            imageUrl: { 
+                type: String, 
+                required: function() { return this.optionType !== "Text"; } 
+            }, 
+            isCorrect: {
+                type: Boolean, 
+                required: true
+            }
         }],
         timer: {
             type: String

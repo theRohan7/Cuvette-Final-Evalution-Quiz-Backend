@@ -4,6 +4,7 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import { Question } from "../models/question.model.js";
 import { Quiz } from "../models/quiz.model.js";
 import { QuizAnalysis } from "../models/analytics.model.js";
+import { uploadOnCloudinary } from "../utils/fileUploader.js";
 
 
 
@@ -24,14 +25,30 @@ const addQuestion = asyncHandler( async(req, res) =>{
     }
 
     const savedQuestions = await Promise.all(questionData.map(async (que) =>{
+
+        const options = Promise.all(que.options.map( async(option) => {
+            let imageUrl = option.imageUrl;
+            if(que.optionType === "Image" || que.optionType === "Text & Image"){
+                if(!imageUrl){
+                    throw new ApiError(400, "Image Url is required for the selected option")
+                }
+
+                const result = await uploadOnCloudinary(imageUrl)
+                imageUrl = result.url;
+            };
+
+            return {
+                text: option.text,
+                imageUrl: que.optionType !== "Text" ? imageUrl : undefined,
+                isCorrect: option.isCorrect,
+            };
+        }));
+
         const newQuestion = new Question({
             quizID: quizID,
             questionText: que.questionText,
             optionType: que.optionType,
-            options: que.options.map(option => ({
-                text: option.text,
-                isCorrect: option.isCorrect
-            })),
+            options: options,
             timer: que.timer
         });
         return await newQuestion.save();
