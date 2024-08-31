@@ -2,7 +2,7 @@ import mongoose, { Schema } from "mongoose";
 
 const  questionSchema = new Schema(
     {
-        quizId:{
+        quizID:{
             type: mongoose.Schema.Types.ObjectId,
             ref: "Quiz"
         },
@@ -16,15 +16,12 @@ const  questionSchema = new Schema(
             default: "Text",
             required: true,
         },
-        option: [{
+        options: [{
             text: {type: String, required: true},
             isCorrect: {type: Boolean, required: true}
         }],
-        timer:{
-            type: Number,
-            eum: [0, 5, 10],
-            required: true,
-            default: 0
+        timer: {
+            type: String
         }
 
     },{timestamps: true}

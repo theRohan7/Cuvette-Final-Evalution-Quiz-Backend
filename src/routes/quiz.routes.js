@@ -6,7 +6,8 @@ import {
     getAllQuiz, 
     getQuiz, 
     deleteQuiz, 
-    shareQuiz,
+    attemptQuiz,
+    quizAnalysis
 } from "../controllers/quiz.controller.js";
 
 
@@ -16,9 +17,10 @@ const router = Router()
 router.route("/create-quiz").post(verifyJWT, createQuiz)
 router.route("/edit-quiz/:id").post(verifyJWT, editQuiz)
 router.route("/").get(verifyJWT, getAllQuiz)
-router.route("/:id").get(verifyJWT, getQuiz)
+router.route("/:id").get( getQuiz)
 router.route("/delete/:id").get(verifyJWT, deleteQuiz)
-router.route("/share/:id").get(verifyJWT, shareQuiz)
+router.route("/take-quiz/:id").post(attemptQuiz)
+router.route("/question-analysis/:quizID").get( verifyJWT, quizAnalysis )
 
 
 export default router

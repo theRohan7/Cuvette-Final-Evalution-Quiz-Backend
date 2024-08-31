@@ -8,8 +8,8 @@ const quizSchema = new Schema(
         },
         quizType:{
             type: String,
-            default: "Q&A",
-            enum: ["Q&A", "Poll"]
+            enum: ["Q&A", "Poll"],
+            required: true
         },
         date:{
             type: Date,
@@ -23,8 +23,13 @@ const quizSchema = new Schema(
             type: mongoose.Schema.Types.ObjectId,
             ref: "User",
             required: true
-        }
-    }
+        },
+        questions: [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Question"
+        }]
+    },
+    {timestamps: true}
 )
 
 export const Quiz = mongoose.model("Quiz", quizSchema);

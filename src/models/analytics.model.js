@@ -1,35 +1,47 @@
 import mongoose, { Schema } from "mongoose";
 
 
-const analyticSchema = new Schema(
-    {
-      quizId:{
-        type: mongoose.Schema.Types.ObjectId,
-        ref:"Quiz"
-      },
+const QuizAnalysisSchema = new Schema(
+  {
+    quizID: { 
+      type: mongoose.Schema.Types.ObjectId, 
+      ref: 'Quiz' 
+    },
+    impressions: {
+      type: Number
+    },
+    questionAnalysis: [
+      {
+        questionID: { 
+          type: mongoose.Schema.Types.ObjectId, 
+          ref: 'Question' 
+        },
+        totalAttempt: {
+          type: Number,
+          default: 0
+        },
+        totalCorrect: {
+          type: Number,
+          default: 0
+        },
+        totalIncorrect:{ 
+          type: Number,
+          default: 0
+        },
+        optionCounts: [
+          {
+            optionText: String,
+            count: Number
+          }
+        ]
+      }
+    ]
+});
 
-      questionId:{
-        type: mongoose.Schema.Types.ObjectId,
-        ref:"Question"
-      },
 
-      totalImpression:{
-        type:Number,
-      },
+export const QuizAnalysis = mongoose.model("QuizAnalysis", QuizAnalysisSchema)
 
-      totalAttempted:{
-        type:Number,
-      },
 
-      totalCorrect:{
-        type:Number
-      },
 
-      totalIncorrect:{
-        type:Number
-      },
 
-    }
-)
 
-export const Analytics = mongoose.model("Analytics", analyticSchema)

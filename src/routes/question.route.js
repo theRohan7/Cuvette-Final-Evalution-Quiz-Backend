@@ -6,7 +6,8 @@ import { addQuestion } from "../controllers/question.controller.js";
 
 const router = Router()
 
-router.route("/add-question").post(verifyJWT, addQuestion)
+router.route("/add-question/:quizID").post(verifyJWT, addQuestion)
+
 
 
 
