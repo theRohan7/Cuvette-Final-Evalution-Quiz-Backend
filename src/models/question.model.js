@@ -19,11 +19,9 @@ const  questionSchema = new Schema(
         options: [{
             text: { 
                 type: String, 
-                required: function() { return this.optionType !== "Image"; } 
             },
             imageUrl: { 
-                type: String, 
-                required: function() { return this.optionType !== "Text"; } 
+                type: String,     
             }, 
             isCorrect: {
                 type: Boolean, 

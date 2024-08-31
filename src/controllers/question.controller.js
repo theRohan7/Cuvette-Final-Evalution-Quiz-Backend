@@ -12,8 +12,7 @@ const addQuestion = asyncHandler( async(req, res) =>{
     
     const {quizID} = req.params
     const {questionData} = req.body
-    
-    
+
     const quiz = await Quiz.findById(quizID)
 
     if(!quiz){
@@ -26,7 +25,7 @@ const addQuestion = asyncHandler( async(req, res) =>{
 
     const savedQuestions = await Promise.all(questionData.map(async (que) =>{
 
-        const options = Promise.all(que.options.map( async(option) => {
+        const options = await Promise.all(que.options.map( async(option) => {
             let imageUrl = option.imageUrl;
             if(que.optionType === "Image" || que.optionType === "Text & Image"){
                 if(!imageUrl){
@@ -51,6 +50,10 @@ const addQuestion = asyncHandler( async(req, res) =>{
             options: options,
             timer: que.timer
         });
+
+        console.log(options);
+        
+        
         return await newQuestion.save();
     }));
 
