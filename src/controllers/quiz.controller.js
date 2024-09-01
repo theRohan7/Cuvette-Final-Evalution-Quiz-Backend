@@ -147,7 +147,9 @@ const attemptQuiz = asyncHandler ( async(req, res) => {
 
         let isCorrect = false;
         if(quiz.quizType === 'Q&A') {
-          isCorrect = question.options.some(option =>  option.text === selectedOption)
+          isCorrect = question.options.some(option => {
+            return option.isCorrect && option.text.trim().toLowerCase() === selectedOption.trim().toLowerCase();
+          });
 
           if(isCorrect){
             questionAnalysis.totalCorrect += 1;
