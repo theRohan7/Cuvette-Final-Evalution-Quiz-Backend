@@ -101,7 +101,11 @@ const loginUser = asyncHandler( async(req, res) => {
 } )
 
 const logoutUser = asyncHandler ( async(req, res) => {
-    await User.findById(req.user._id)
+    const user = await User.findById(req.user._id)
+
+    if (!user) {
+        throw new ApiError(404, "User not found");
+    }
 
     return res
     .status(200)
