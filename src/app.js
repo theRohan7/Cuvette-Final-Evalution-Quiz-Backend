@@ -23,9 +23,9 @@ app.get("/", (req, res) => {
     res.send("hello world")
 })
 
-app.use("/api/v1/user", userRouter)
-app.use("/api/v1/quiz", quizRouter)
-app.use("/api/v1/quiz", questionRouter)
+app.use("/user", userRouter)
+app.use("/quiz", quizRouter)
+app.use("/quiz", questionRouter)
 
 
 
